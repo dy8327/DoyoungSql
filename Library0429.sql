@@ -1,0 +1,58 @@
+--도서 대여 관리 프로그램 26.04.29--
+
+--멤버 테이블 생성--
+CREATE TABLE MEMBER(
+MEMBER_ID       VARCHAR2(20)    PRIMARY KEY,
+MEMBER_PW       VARCHAR2(20)    NOT NULL,
+MEMBER_NAME     VARCHAR2(20)    NOT NULL,
+MEMBER_TEL      VARCHAR2(15)    NOT NULL,
+REG_DATE        DATE            DEFAULT(SYSDATE),
+RENT_POS        VARCHAR2(5)          
+);
+
+--도서 테이블 생성--
+CREATE TABLE BOOK(
+BOOK_NO         NUMBER(15)      PRIMARY KEY,
+ISBN            VARCHAR2(17)    NOT NULL,
+BOOK_NAME       VARCHAR2(30)    NOT NULL,
+AUTHOR          VARCHAR2(30)    NOT NULL,
+PUBLISHER       VARCHAR2(20)    NOT NULL,
+STOCK           NUMBER(2)       NOT NULL,
+RENT_POS        VARCHAR2(5)     NOT NULL
+);
+COMMIT;
+
+--대여 내역 테이블 --
+CREATE TABLE RENTAL(
+RENT_NO         NUMBER(10)      PRIMARY KEY,
+MEMBER_ID       VARCHAR2(20)    CONSTRAINT RENT_MEMBER_FK REFERENCES MEMBER(MEMBER_ID),
+BOOK_NO         NUMBER(15)      CONSTRAINT RENT_BOOK_FK REFERENCES BOOK(BOOK_NO),
+RENT_SRT        DATE            DEFAULT(SYSDATE),
+RENT_END        DATE,
+RENT_REAL_END   DATE,
+RENT_OVERDUE    VARCHAR2(5) 
+);
+
+SELECT parameter, value 
+FROM nls_database_parameters 
+WHERE parameter LIKE '%CHARACTERSET%';
+
+SELECT value FROM nls_database_parameters WHERE parameter='NLS_CHARACTERSET';
+
+select * from book;
+
+SELECT MEMBER_ID, MEMBER_PW
+            FROM MEMBER
+            WHERE MEMBER_ID='sigd'; 
+            
+SELECT BOOK_NO, BOOK_NAME
+FROM book
+WHERE ;
+
+insert into BOOK VALUES(000001, '979-11-5839-515-5', 'JAVA/Spring programming', '김우근', '위키북스', 1, 'O');
+
+SELECT BOOK_NO, BOOK_NAME, AUTHOR, PUBLISHER, ISBN, STOCK, RENT_POS 
+FROM BOOK
+WHERE BOOK_NAME LIKE '%1%' 
+or
+BOOK_NAME LIKE 'JA%';
